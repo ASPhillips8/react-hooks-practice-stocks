@@ -7,10 +7,6 @@ function MainContainer() {
   const [stocks, setStocks] = useState([])
   const [portfolioStocks, setPortfoliosStock] = useState([])
 
-  // need to pass in a new array to PortolioContainer
-  // contains items clicked
-  // create a event handler on the stock
-
   useEffect(() => {
     fetch("http://localhost:3001/stocks")
       .then((response) => response.json())
@@ -21,7 +17,10 @@ function MainContainer() {
     setPortfoliosStock([...portfolioStocks, boughtStock])
   }
 
-  console.log(portfolioStocks)
+  function handleStockSelling(id) {
+    const updatedPortfolio = portfolioStocks.filter((stock) => stock.id !== id)
+    setPortfoliosStock(updatedPortfolio)
+  }
 
   return (
     <div>
@@ -31,7 +30,10 @@ function MainContainer() {
           <StockContainer stocks={stocks} onPurchase={handleStockPurchase} />
         </div>
         <div className="col-4">
-          <PortfolioContainer portfolioStocks={portfolioStocks} />
+          <PortfolioContainer
+            portfolioStocks={portfolioStocks}
+            onSold={handleStockSelling}
+          />
         </div>
       </div>
     </div>
