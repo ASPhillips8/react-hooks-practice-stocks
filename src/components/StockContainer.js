@@ -3,7 +3,7 @@ import Stock from "./Stock"
 
 function StockContainer({ stocks, onPurchase }) {
   const displayedStocks = stocks.map((stock) => {
-    return <Stock key={stock.id} stock={stock} onPurchase={onPurchase} />
+    return <Stock key={stock.id} stock={stock} onClick={onPurchase} />
   })
 
   return (

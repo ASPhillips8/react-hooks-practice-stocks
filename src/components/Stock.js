@@ -1,14 +1,10 @@
 import React from "react"
 
-function Stock({ stock, onPurchase, onSold }) {
+function Stock({ stock, onClick }) {
   const { id, ticker, name, price, type } = stock
 
   function handleStockClick() {
-    if (onPurchase) {
-      onPurchase(stock)
-    } else if (onSold) {
-      onSold(id)
-    }
+    onClick(stock)
   }
 
   return (

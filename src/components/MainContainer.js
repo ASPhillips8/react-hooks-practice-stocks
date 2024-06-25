@@ -14,11 +14,16 @@ function MainContainer() {
   }, [])
 
   function handleStockPurchase(boughtStock) {
+    // check if bought is in portfolio
+    // if is return unchanged
+    // if not add to portfolio
     setPortfoliosStock([...portfolioStocks, boughtStock])
   }
 
-  function handleStockSelling(id) {
-    const updatedPortfolio = portfolioStocks.filter((stock) => stock.id !== id)
+  function handleStockSelling(soldStock) {
+    const updatedPortfolio = portfolioStocks.filter(
+      (stock) => stock.id !== soldStock.id
+    )
     setPortfoliosStock(updatedPortfolio)
   }
 
