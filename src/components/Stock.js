@@ -4,7 +4,7 @@ function Stock({ stock, onPurchase }) {
   const { id, ticker, name, price, type } = stock
 
   function handlePurchase() {
-    onPurchase(name)
+    onPurchase(stock)
   }
 
   return (
