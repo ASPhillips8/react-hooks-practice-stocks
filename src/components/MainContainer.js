@@ -14,10 +14,14 @@ function MainContainer() {
   }, [])
 
   function handleStockPurchase(boughtStock) {
+    if (portfolioStocks.includes(boughtStock)) {
+      return portfolioStocks
+    } else {
+      setPortfoliosStock([...portfolioStocks, boughtStock])
+    }
     // check if bought is in portfolio
     // if is return unchanged
     // if not add to portfolio
-    setPortfoliosStock([...portfolioStocks, boughtStock])
   }
 
   function handleStockSelling(soldStock) {
