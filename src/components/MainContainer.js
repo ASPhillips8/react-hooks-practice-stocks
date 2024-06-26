@@ -6,7 +6,8 @@ import SearchBar from "./SearchBar"
 function MainContainer() {
   const [stocks, setStocks] = useState([])
   const [portfolioStocks, setPortfoliosStock] = useState([])
-  const [sortBy, setSortBy] = useState("Alphabetically")
+  const [sortBy, setSortBy] = useState("")
+  const [filteredCategory, setFilteredCategory] = useState("Tech")
 
   useEffect(() => {
     fetch("http://localhost:3001/stocks")
@@ -41,14 +42,20 @@ function MainContainer() {
   }
 
   const sortedStocks = sortStocks(stocks, sortBy)
+  const filteredStocks = sortedStocks.filter(
+    (stock) => stock.type === filteredCategory
+  )
 
   return (
     <div>
-      <SearchBar onSortOption={handleSortStock} />
+      <SearchBar
+        onSortOption={handleSortStock}
+        setFilteredCategory={setFilteredCategory}
+      />
       <div className="row">
         <div className="col-8">
           <StockContainer
-            stocks={sortedStocks}
+            stocks={filteredStocks}
             onPurchase={handleStockPurchase}
           />
         </div>
