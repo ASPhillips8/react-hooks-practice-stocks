@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar"
 function MainContainer() {
   const [stocks, setStocks] = useState([])
   const [portfolioStocks, setPortfoliosStock] = useState([])
+  const [sortBy, setSortBy] = useState("Alphabetically")
 
   useEffect(() => {
     fetch("http://localhost:3001/stocks")
@@ -14,14 +15,8 @@ function MainContainer() {
   }, [])
 
   function handleStockPurchase(boughtStock) {
-    if (portfolioStocks.includes(boughtStock)) {
-      return portfolioStocks
-    } else {
+    portfolioStocks.includes(boughtStock) ||
       setPortfoliosStock([...portfolioStocks, boughtStock])
-    }
-    // check if bought is in portfolio
-    // if is return unchanged
-    // if not add to portfolio
   }
 
   function handleStockSelling(soldStock) {
@@ -31,12 +26,31 @@ function MainContainer() {
     setPortfoliosStock(updatedPortfolio)
   }
 
+  function handleSortStock(sortOption) {
+    setSortBy(sortOption)
+  }
+
+  function sortStocks(stocks, sortBy) {
+    return [...stocks].sort((a, b) => {
+      if (sortBy === "Alphabetically") {
+        return a.name.localeCompare(b.name)
+      } else if (sortBy === "Price") {
+        return a.price - b.price
+      }
+    })
+  }
+
+  const sortedStocks = sortStocks(stocks, sortBy)
+
   return (
     <div>
-      <SearchBar />
+      <SearchBar onSortOption={handleSortStock} />
       <div className="row">
         <div className="col-8">
-          <StockContainer stocks={stocks} onPurchase={handleStockPurchase} />
+          <StockContainer
+            stocks={sortedStocks}
+            onPurchase={handleStockPurchase}
+          />
         </div>
         <div className="col-4">
           <PortfolioContainer
